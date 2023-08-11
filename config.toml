@@ -1,0 +1,39 @@
+# This is the config for version v0.1.0 of the script
+[Sensor]
+  # This is the default from the Sensirion specs with is 1 week.
+  FanCleaningInterval = 604800
+  # If you set this to true, it will start a manuall fan cleaning cycle and then terminate the script until you set this back to false. 
+  ForceCleanFan = false
+  # This is the RH/T acceleration mode. Please read the datasheet from Sensirion for more information on what this does.
+  RthAccelerationMode = 0
+  # Same as above
+  TemperatureOffset = 0.0
+  [Sensor.OperationMode]
+    # The main operation mode is "all" which means it will try to measure everything (pm and other data if model supports it). The other option that you can put here is "gas" which only measures gas data and not PM values. If you are using the SEN50 sensor only use "all" here.
+    Main = "all"
+    # The secondary mode is used between each round of measurements. If you set this to "gas" it will continue to measure gas (VOC, Nox) without the PM until the next round of measurements. Again if you are using the SEN50 sensor only use "idle" here which does nothing (essentialy will sleep the sensor between each round of measurements).
+    Secondary = "gas"
+
+[Measurement]
+    # This is the time in seconds that the script will wait between each measurement. If you use 0, it will use the Data-Ready flag of the sensor to know when a measurement is ready. This is the default value.
+  WaitBetweenMeasurements = 0
+  # How many measurements to take before finding their average. Essentially if you take a measurement each second this will be roughly the seconds that the script will collect data each measurement round.
+  TakeMeasurementsFor = 300
+  # How many seconds to sleep between each round of measurements. This is useful if you want to save power, or give the air and the sensor some time to settle.
+  SleepUntilNextBatchOfMeasurements = 300
+  # This ignores the first x measurements. Good to cut some noise for the first few measurements.
+  IgnoreFirstXMeasurements = 30
+
+[Console]
+  # If enabled everything will be printed to the console. Useful for debugging and if you running as a service it will get logged with systemd.
+  Enabled = true
+
+[DataLogging]
+  # If enabled it will log th data to a csv file. By default the FileName is empty, so you can change it here. Otherwise you can pass it as a command line argument or it will ask the user for a name.
+  Enabled = true
+  FileName = ""
+
+[SensorCommunity]
+  # If enabled it will send the data to sensor.community. You need to provide a valid SensorNodeID for this to work. More info below.
+  Enabled = false
+  SensorNodeID = "raspi-123456789"
