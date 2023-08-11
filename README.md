@@ -25,14 +25,16 @@ After=network.target
 Wants=network-online.target
 
 [Service]
-WorkingDirectory=/home/aggellos2001
+WorkingDirectory=PATH-TO-FOLDER-WITH-EXECUTABLE
 Restart=always
 Type=simple
-ExecStart=/home/aggellos2001/sen5x-bin
+ExecStart=PATH-TO-BINARY
  
 [Install]
 WantedBy=multi-user.target
 ```
+
+Make sure to change replace the path placeholders to the correct location on your system.
 
 After that you need to reload the systemd daemon with the command
 ```bash
