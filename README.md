@@ -1,6 +1,6 @@
 # sen5x-go
 
-#### A wrapper for the Raspberry Pi Driver provided by Sensirion for the Sen5x sensors family that can write the measurements to a csv file and send them to the cloud to [sensor.community](https://sensor.community/en/).
+#### A wrapper for the [Raspberry Pi Driver provided by Sensirion](https://github.com/Sensirion/raspberry-pi-i2c-sen5x) for the SEN5x sensors family that can write the measurements to a csv file and send them to the cloud to [sensor.community](https://sensor.community/en/).
 
 #### Why Go?
 Go is very fast and easily to write language that can be compiled to a single binary unlike Python which needs a lot of dependencies and also needs to be installed on the target system. With Go you can just copy the binary to your Raspberry Pi and run it. No need to install anything else.
@@ -100,6 +100,20 @@ After that you can run the script and it will upload the data to sensor.communit
 ## Updates
 
 Check the releases page for updates of the script. When a new version contains changes to the config.toml file it will automatically update and remove or add default values to the config.toml file as need so make sure to read the release notes and check the config yourself after an update.
+
+## Cross compiling for Raspberry Pi
+
+If you want to cross compile the script from the source for the Raspberry Pi you can use the following command:
+
+```bash
+CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc CC_FOR_TARGET=gcc-aarch64-linux-gnu go build -o bin/sen5x-bin .
+```
+
+For this to work you need to have the appriopriate compiler installed and also your system should have a compatible libc version. Currently RaspberryPI OS is based on Debian 11, so you need GGLIBC 2.31 or older.
+
+## Versioning
+
+This project uses [Go's module version numbering rules.](https://go.dev/doc/modules/version-numbers)
 
 ## Contributing
 
