@@ -109,7 +109,7 @@ If you want to cross compile the script from the source for the Raspberry Pi you
 CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc CC_FOR_TARGET=gcc-aarch64-linux-gnu go build -o bin/sen5x-bin .
 ```
 
-For this to work you need to have the appriopriate compiler installed and also your system should have a compatible libc version. Currently RaspberryPI OS is based on Debian 11, so you need GGLIBC 2.31 or older.
+For this to work you need to have the appriopriate compiler installed and also your system should have a compatible libc version. Currently RaspberryPI OS is based on Debian 11, so you need GLIBC 2.31 or older.
 
 ## Versioning
 
