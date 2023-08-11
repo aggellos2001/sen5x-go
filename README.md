@@ -10,7 +10,7 @@ Go is very fast and easily to write language that can be compiled to a single bi
 Tested with a Raspberry PI Zero 2W but should work with the PI 4 as well. 
 
 > [!WARNING]
-> Using the 64-bit version of Raspberry PI OS is required to run the precompiled binary.**
+> **Using the 64-bit version of Raspberry PI OS is required to run the precompiled binary.**
 
 ## Installation
 The installation is very easy. Just copy the binary to your Raspberry Pi and run it. You can find the latest binary in the Github releases page.
