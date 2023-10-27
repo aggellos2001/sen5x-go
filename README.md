@@ -1,6 +1,6 @@
 # sen5x-go
 
-#### A wrapper for the [Raspberry Pi Driver provided by Sensirion](https://github.com/Sensirion/raspberry-pi-i2c-sen5x) for the SEN5x sensors family that can write the measurements to a csv file and send them to the cloud to [sensor.community](https://sensor.community/en/).
+#### A wrapper for the [Raspberry Pi Driver provided by Sensirion](https://github.com/Sensirion/raspberry-pi-i2c-sen5x) (this project is not endorsed by Sensirion!) for the SEN5x sensors family that can write the measurements to a csv file and send them to the cloud to [sensor.community](https://sensor.community/en/).
 
 #### Why Go?
 Go is very fast and easily to write language that can be compiled to a single binary unlike Python which needs a lot of dependencies and also needs to be installed on the target system. With Go you can just copy the binary to your Raspberry Pi and run it. No need to install anything else.
