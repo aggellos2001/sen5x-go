@@ -3,3 +3,5 @@ bin/
 Makefile
 *.pgo
 note.txt
+*.snap
+.idea

@@ -18,10 +18,10 @@
 /*
 This program uses the SEN55 sensor from Sensirion to take various measurements and
 print them to a file and or the community site sensor.community if configured.
-A configuration file is available at the github repository that you may use to configure
+A configuration file is available at the GitHub repository that you may use to configure
 all the available
 The folder sen5xlib contains the C bindings and the functions to communicate with the sensor
-that Sensirion provides at their github repository. This program is not endorsed by Sensirion!
+that Sensirion provides at their GitHub repository. This program is not endorsed by Sensirion!
 */
 package main
 
@@ -31,7 +31,6 @@ import (
 	"io"
 	"log"
 
-	// _ "net/http/pprof"
 	"os"
 	"os/signal"
 	"strings"
@@ -39,7 +38,7 @@ import (
 
 	"github.com/aggellos2001/sen5x-go/community"
 	"github.com/aggellos2001/sen5x-go/conf"
-	"github.com/aggellos2001/sen5x-go/sen5xlib"
+	"github.com/aggellos2001/sen5xlib"
 )
 
 func handlePanic() {
@@ -59,7 +58,10 @@ func main() {
 	signal.Notify(sigintch, os.Interrupt)
 	go func() {
 		<-sigintch
-		sen5xlib.StopMeasurement()
+		err := sen5xlib.StopMeasurement()
+		if err != nil {
+			log.Fatalln("exiting the program with errors, check connection to sensor...", err)
+		}
 		log.Println("exiting gracefully...")
 		os.Exit(0)
 	}()
@@ -134,7 +136,12 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		defer csvMeasurementFile.Close()
+		defer func(csvMeasurementFile *os.File) {
+			err := csvMeasurementFile.Close()
+			if err != nil {
+				log.Fatal("could not close measurement file. aborting program!")
+			}
+		}(csvMeasurementFile)
 	} else {
 		log.Println("data logging to a file is disabled")
 	}
@@ -186,7 +193,11 @@ func main() {
 
 			// if the user specified to ignore the first X measurements, do so
 			if i < config.Measurement.IgnoreFirstXMeasurements {
-				sen5xlib.ReadMeasuredValues()
+				_, err := sen5xlib.ReadMeasuredValues()
+				if err != nil {
+					log.Println("error while reading values from sensor", err)
+					continue
+				}
 				continue
 			}
 

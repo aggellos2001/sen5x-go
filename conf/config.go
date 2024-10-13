@@ -16,11 +16,12 @@
 */
 
 /*
-This package handles how the config is structrured
+Package conf handles how the config is structrured
 */
 package conf
 
 import (
+	"errors"
 	"log"
 	"os"
 
@@ -100,23 +101,30 @@ type DataLogging struct {
 }
 
 func LoadConfig() (Config, error) {
-	var config Config = DefaultConfig
+	var config = DefaultConfig
 	_, err := toml.DecodeFile("config.toml", &config)
 	if err != nil {
-		if _, ok := err.(*os.PathError); ok {
+		var pathError *os.PathError
+		if errors.As(err, &pathError) {
 			// the file does not exist, create it with default values
 			log.Println("config file does not exist, creating it with default values...")
 			file, err := os.Create("config.toml")
 			if err != nil {
 				return Config{}, err
 			}
-			defer file.Close()
-			toml.NewEncoder(file).Encode(DefaultConfig)
+			defer func(file *os.File) {
+				err := file.Close()
+				if err != nil {
+					log.Println(err)
+				}
+			}(file)
+			err = toml.NewEncoder(file).Encode(DefaultConfig)
+			if err != nil {
+				return Config{}, err
+			}
 			log.Println("created config file successfully!")
 			log.Println("please edit the config file and run the program again!")
 			os.Exit(0)
-		} else {
-			return Config{}, err
 		}
 	}
 

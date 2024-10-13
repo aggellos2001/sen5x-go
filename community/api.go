@@ -29,7 +29,7 @@ import (
 	"time"
 
 	"github.com/aggellos2001/sen5x-go/conf"
-	"github.com/aggellos2001/sen5x-go/sen5xlib"
+	"github.com/aggellos2001/sen5xlib"
 )
 
 const (

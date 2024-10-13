@@ -17,7 +17,7 @@
 
 package main
 
-import "github.com/aggellos2001/sen5x-go/sen5xlib"
+import "github.com/aggellos2001/sen5xlib"
 
 // Pass by reference to avoid copying the whole slice of measurements every time
 func AverageMeasurement(sliceOfMeasurements *[]sen5xlib.SensorMeasurement) sen5xlib.SensorMeasurement {
